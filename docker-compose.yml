@@ -1,0 +1,26 @@
+javaee:
+  image: payara/server-full
+  ports:
+    - "8080:8080"
+    - "4848:4848"
+  command: "bin/asadmin start-domain -v"
+db:
+  image: postgres:alpine
+  environment:
+    - POSTGRES_PASSWORD=queenelizabeth
+    - POSTGRES_USER=gamma
+    - POSTGRES_DB=gamma
+  ports:
+    - '5432:5432'
+  volumes:
+    - '.docker/db:/var/lib/postgresql/data'
+ldap:
+  image: dinkel/openldap
+  ports:
+    - '389:389'
+  environment:
+    - SLAPD_PASSWORD=queenelizabeth
+    - SLAPD_DOMAIN=swaggabros.nl
+  volumes:
+    - '.docker/ldap-conf:/etc/ldap'
+    - '.docker/ldap-data:/var/lib/ldap' 
